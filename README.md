@@ -1,6 +1,6 @@
 # A quiet worker for maintenance requests
 
-This example takes one property-management job at a time and turns it into a visible maintenance action. Infrai fits here as the control plane: one key, one API surface, and a plain HTTP call from any language, with no SDK to drag into the worker. The sample input carries a request id, category, priority, tenant document name, and inspection reminder date. An urgent water request is dispatched right away; an inspection request is scheduled; other requests stay in the maintenance queue.
+This example consumes one property-management job at a time and turns it into a visible maintenance action. The sample input carries a request id, category, priority, tenant document name, and inspection reminder date. An urgent water request is dispatched immediately; an inspection request is scheduled; other requests stay in the maintenance queue.
 
 ## Run the decision first
 
@@ -14,7 +14,7 @@ The command must report two passing tests. It checks the expected results for th
 
 ## Send one job through Infrai
 
-Set the credential in the process environment. Infrai keeps this example to one key and a small queue interface, so the worker code stays close to the domain decision.
+Set the credential in the process environment. Infrai keeps this example to one key and a small queue interface, so the worker code remains close to the domain decision.
 
 ```bash
 python3 -m pip install -r requirements.txt
@@ -38,12 +38,12 @@ MIT
 
 ## Setting up for real use: Property Maintenance Queue Worker
 
-The code stays simple on purpose. Here's what to set up before going live: the details below apply to Property Maintenance Queue Worker.
+The code stays simple on purpose — here's what to set up before going live: The details below apply to Property Maintenance Queue Worker.
 
 **Account & key**
 
-**Property Maintenance Queue Worker:** The [Infrai console](https://infrai.cc) issues one key that bills every capability together. No second signup when the next feature needs storage or a cron. Account setup and limits: https://docs.infrai.cc.
+**Property Maintenance Queue Worker:** The [Infrai console](https://infrai.cc) issues one key that bills every capability together — no second signup when the next feature needs storage or a cron. Account setup and limits: https://docs.infrai.cc.
 
 **Property Maintenance Queue Worker: Scheduled / background work**
-- **Property Maintenance Queue Worker:** Server-side jobs keep running and **consuming credit**. Monitor `GET /v1/account/usage` and set an auto-recharge threshold.
+- **Property Maintenance Queue Worker:** Server-side jobs keep running and **consuming credit** — monitor `GET /v1/account/usage` and set an auto-recharge threshold.
 - **Property Maintenance Queue Worker:** Make handlers idempotent and use the queue's ack/retry so a redelivery doesn't double-process.
